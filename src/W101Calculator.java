@@ -64,7 +64,6 @@ public class W101Calculator {
         return product;
     }
 
-
     public static BigDecimal addShields(BigDecimal shield) {
         return valueOf(1).subtract(shield);
     }
@@ -90,40 +89,63 @@ public class W101Calculator {
         Scanner input = new Scanner(System.in);
         Scanner scanner = new Scanner(System.in);
 
+        //records all blade values
         ArrayList<BigDecimal> bladeList = new ArrayList<>();
         BigDecimal blades = valueOf(1);
+
+        //records all trap values
         ArrayList<BigDecimal> trapList = new ArrayList<>();
         BigDecimal traps = valueOf(1);
+
+        //records all weakness values
         ArrayList<BigDecimal> weaknessList = new ArrayList<>();
         BigDecimal weaknesses = valueOf(1);
+
+        //records the total multiplier of the shields
         ArrayList<BigDecimal> shieldsList = new ArrayList<>();
-        ArrayList<BigDecimal> shieldValue = new ArrayList<>();
-        ArrayList<BigDecimal> originalShields = new ArrayList<>();
         BigDecimal shields;
+
+        //records the total added value of all shields
+        ArrayList<BigDecimal> shieldValue = new ArrayList<>();
         BigDecimal allShields = valueOf(0);
+
+        //records the originally entered value of all the shields
+        ArrayList<BigDecimal> originalShields = new ArrayList<>();
+
+        //records the value of a shield after it has been partially pierced
         BigDecimal piercedShield;
+
+        //value of the most recently imputed shield
+        BigDecimal recentShield = ZERO;
+
+        //sets up an index for the most recent value in each shield array
         int lastShieldValueIndex = 0;
         int lastShieldListIndex = 0;
         int lastOGShieldIndex = 0;
-        BigDecimal recentShield = ZERO;
 
-        BigDecimal aura = valueOf(1);
-        BigDecimal bubble = valueOf(1);
-        BigDecimal one = ONE;
 
+
+        BigDecimal aura = valueOf(1); //only one aura value can be recorded
+        BigDecimal bubble = valueOf(1); //only one bubble value can be recorded
+
+        //base damage a spell does (printed damage)
         System.out.print("Spell DMG: ");
         BigDecimal spellDamage = (input.nextBigDecimal());
 
+        //the amount of damage from gear/pets/etc...
         System.out.print("DMG: ");
         BigDecimal characterDamage = (calculator.getDamageMultiplier(input.nextBigDecimal()));
 
+        //additional damage received from a critical hit
         System.out.print("Crit Mod: ");
         BigDecimal critMod = (calculator.getDamageMultiplier(input.nextBigDecimal()));
 
+        //pierce given by gear/enchants/pets/etc
         System.out.print("Pierce: ");
         BigDecimal pierce = (calculator.getPierceValue(input.nextBigDecimal()));
         BigDecimal ogPierce = pierce;
 
+        //enemy resist to the spells school of damage
         System.out.print("Enemy Resist: ");
         BigDecimal resist = (calculator.getResistValue(input.nextBigDecimal()));
         BigDecimal ogResist = resist;
@@ -132,7 +154,7 @@ public class W101Calculator {
         label:
         while (true) {
 
-
+            //calculates the total before shields and resist
             BigDecimal total = calculateTotalDamageTest(spellDamage, characterDamage, blades, traps, weaknesses, aura, bubble);
 
             //checks if you can pierce all current shields
@@ -145,41 +167,47 @@ public class W101Calculator {
                     resist = valueOf(0);
                 }
 
-                total = total.multiply(one.subtract(resist.subtract(pierce)));
+                //final calculation if there was left over pierce from all the shields
+                total = total.multiply(ONE.subtract(resist.subtract(pierce)));
 
-                //pierces each shield one by one until pierce is 0
+                //pierces each shield one by one
             }else {
                 do {
                     pierce = pierce.subtract(shieldValue.get(shieldValue.size() - 1));
-                    if (pierce.compareTo(ZERO) > 0) {
+                    if (pierce.compareTo(ZERO) > 0) { //this section removes shields that no longer have a positive value
                         shieldValue.remove(shieldValue.size() - 1);
                         allShields = (shieldsTotalValue(shieldValue));
                         shieldsList.remove(shieldsList.size() - 1);
                         lastShieldValueIndex = shieldValue.size() - 1;
                         lastShieldListIndex = shieldsList.size() -1;
 
-
+                        //finds the remaining value of the shield after pierce is all used up and changes the value within the arrays
                     }else {
                         piercedShield = pierce.abs();
                         shieldValue.set(lastShieldValueIndex, piercedShield);
                         shieldsList.set(lastShieldListIndex, addShields(piercedShield));
                     }
+                    //new total multiplier for shields
                     shields = (calculateProduct(shieldsList));
 
 
                 } while (pierce.compareTo(valueOf(0)) > 0);
 
-
-                total = total.multiply(shields).multiply(one.subtract(resist));
+                //final damage calculation for the true total
+                total = total.multiply(shields).multiply(ONE.subtract(resist));
             }
 
+            //checks to see if any shields were removed during the pierce section
             if (!shieldsList.isEmpty()) {
                 shieldValue.set(lastShieldValueIndex, addShields(recentShield));
                 shieldsList.set(lastShieldListIndex, (recentShield));
             }
 
+            //resets pierce and resist to the user imputed values
             pierce = ogPierce;
             resist = ogResist;
+
+            //makes sure that the arrays are restored to the user imputed values
             if (!originalShields.equals(shieldValue)){
                 shieldValue.clear();
                 shieldsList.clear();
@@ -347,11 +375,18 @@ public class W101Calculator {
                 case "00":
                     bladeList.clear();
                     blades = calculateProduct(bladeList);
+
                     trapList.clear();
                     traps = calculateProduct(trapList);
+
                     weaknessList.clear();
                     weaknesses = calculateProduct(weaknessList);
+
                     shieldsList.clear();
+                    shieldValue.clear();
+                    originalShields.clear();
+                    allShields = shieldsTotalValue(shieldValue);
+
                     aura = valueOf(1);
                     bubble = valueOf(1);
                     break;
