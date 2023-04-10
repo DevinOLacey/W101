@@ -5,3 +5,5 @@ If you are interested in joining The Spirals Shadows please add Devin#0585 or ux
 This code will calculate any base spell damage and player-acquired damage while taking into account any and all buffs or debuffs within a small margin of error.
 
 You can always use the help command to get the full command list
+
+To use this calculator please run the java file titled W101Calculator.java
