@@ -135,9 +135,11 @@ public class W101Calculator {
 
             BigDecimal total = calculateTotalDamageTest(spellDamage, characterDamage, blades, traps, weaknesses, aura, bubble);
 
+            //checks if you can pierce all current shields
             if (pierce.compareTo(allShields) >= 0) {
                 pierce = pierce.subtract(allShields);
 
+                //checks for left over pierce
                 if (pierce.compareTo(resist) > 0){
                     pierce = valueOf(0);
                     resist = valueOf(0);
@@ -145,7 +147,7 @@ public class W101Calculator {
 
                 total = total.multiply(one.subtract(resist.subtract(pierce)));
 
-
+                //pierces each shield one by one until pierce is 0
             }else {
                 do {
                     pierce = pierce.subtract(shieldValue.get(shieldValue.size() - 1));
