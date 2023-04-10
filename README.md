@@ -6,7 +6,7 @@ This code will calculate any base spell damage and player-acquired damage while 
 
 You can always use the help command to get the full command list, but these are all the current commands:
 
-b:    adds a blade
+b:    adds a blade\n
 rb:   removes the value of the last blade
 0b:   resets all blades
 t:    adds a trap
