@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -26,14 +27,17 @@ public class W101Calculator {
     }
 
     public static BigDecimal calculateTotalDamageTest(BigDecimal baseDamage, BigDecimal damageMultiplier, BigDecimal blades, BigDecimal traps, BigDecimal weaknesses, BigDecimal aura, BigDecimal bubble) {
-        final BigDecimal multiply = baseDamage.multiply(damageMultiplier).multiply(aura).multiply(bubble);
-        final BigDecimal multiply1 = multiply.multiply(blades).multiply(traps);
-        return multiply1.multiply(weaknesses);
+        final BigDecimal multiply0 = baseDamage.multiply(damageMultiplier).setScale(0, RoundingMode.DOWN);
+        final BigDecimal multiply1 = multiply0.multiply(aura).setScale(0, RoundingMode.DOWN);
+        final BigDecimal multiply2 = multiply1.multiply(bubble).setScale(0, RoundingMode.DOWN);
+        final BigDecimal multiply3 = multiply2.multiply(blades).setScale(0, RoundingMode.DOWN);
+        final BigDecimal multiply4 = multiply3.multiply(traps).setScale(0, RoundingMode.DOWN);
+        return multiply4.multiply(weaknesses).setScale(0, RoundingMode.DOWN);
     }
 
 
     public static BigDecimal calculateCriticalDamage (BigDecimal total, BigDecimal critMod){
-        return total.multiply(critMod);
+        return total.multiply(critMod).setScale(0, RoundingMode.DOWN);
     }
     public BigDecimal getBuffValue(BigDecimal input) {
         return convertBuff(input);
@@ -168,7 +172,7 @@ public class W101Calculator {
                 }
 
                 //final calculation if there was left over pierce from all the shields
-                total = total.multiply(ONE.subtract(resist.subtract(pierce)));
+                total = total.multiply(ONE.subtract(resist.subtract(pierce))).setScale(0, RoundingMode.DOWN);
 
                 //pierces each shield one by one
             }else {
@@ -194,7 +198,7 @@ public class W101Calculator {
                 } while (pierce.compareTo(valueOf(0)) > 0);
 
                 //final damage calculation for the true total
-                total = total.multiply(shields).multiply(ONE.subtract(resist));
+                total = total.multiply(shields).multiply(ONE.subtract(resist)).setScale(0, RoundingMode.DOWN);
             }
 
             //checks to see if any shields were removed during the pierce section
