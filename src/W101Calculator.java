@@ -15,11 +15,28 @@ public class W101Calculator {
         return ONE.add(num.multiply(valueOf(.01))); // updated to return 1 + num * 0.01
     }
 
+    public static ArrayList<BigDecimal> displayBuffs(ArrayList<BigDecimal> buffs){
+        ArrayList<BigDecimal> newBuffs = new ArrayList<>();
+        for (BigDecimal buff : buffs) {
+            BigDecimal newBuff = valueOf(100).multiply(buff.subtract(ONE).setScale(0,RoundingMode.FLOOR));
+            newBuffs.add(newBuff);
+        }
+        return newBuffs;
+    }
+
     // Convert a debuff percentage to a decimal multiplier
     public BigDecimal convertDebuff(BigDecimal num) {
         return ONE.subtract(num.multiply(valueOf(.01))); // updated to return 1 - num * 0.01
     }
 
+    public static ArrayList<BigDecimal> displayWeaknesses(ArrayList<BigDecimal> debuffs){
+        ArrayList<BigDecimal> newDebuffs = new ArrayList<>();
+        for (BigDecimal debuff : debuffs) {
+            BigDecimal newDebuff = valueOf(100).multiply(ONE.subtract(debuff).setScale(0, RoundingMode.FLOOR));
+            newDebuffs.add(newDebuff);
+        }
+        return newDebuffs;
+    }
     public static BigDecimal getShieldValue(BigDecimal input) {
         BigDecimal result = valueOf(1).subtract(input.multiply(valueOf(.01)));
         DecimalFormat df = new DecimalFormat("#.##");
@@ -36,9 +53,10 @@ public class W101Calculator {
     }
 
 
-    public static BigDecimal calculateCriticalDamage (BigDecimal total, BigDecimal critMod){
+    public static BigDecimal calculateCriticalDamage(BigDecimal total, BigDecimal critMod) {
         return total.multiply(critMod).setScale(0, RoundingMode.DOWN);
     }
+
     public BigDecimal getBuffValue(BigDecimal input) {
         return convertBuff(input);
     }
@@ -72,7 +90,7 @@ public class W101Calculator {
         return valueOf(1).subtract(shield);
     }
 
-    public static BigDecimal shieldsTotalValue (ArrayList<BigDecimal> list) {
+    public static BigDecimal shieldsTotalValue(ArrayList<BigDecimal> list) {
         BigDecimal sum = BigDecimal.valueOf(0.0);
         for (BigDecimal aDouble : list) {
             sum = sum.add(aDouble);
@@ -128,7 +146,6 @@ public class W101Calculator {
         int lastOGShieldIndex = 0;
 
 
-
         BigDecimal aura = valueOf(1); //only one aura value can be recorded
         BigDecimal bubble = valueOf(1); //only one bubble value can be recorded
 
@@ -166,7 +183,7 @@ public class W101Calculator {
                 pierce = pierce.subtract(allShields);
 
                 //checks for left over pierce
-                if (pierce.compareTo(resist) > 0){
+                if (pierce.compareTo(resist) > 0) {
                     pierce = valueOf(0);
                     resist = valueOf(0);
                 }
@@ -175,7 +192,7 @@ public class W101Calculator {
                 total = total.multiply(ONE.subtract(resist.subtract(pierce))).setScale(0, RoundingMode.DOWN);
 
                 //pierces each shield one by one
-            }else {
+            } else {
                 do {
                     pierce = pierce.subtract(shieldValue.get(shieldValue.size() - 1));
                     if (pierce.compareTo(ZERO) > 0) { //this section removes shields that no longer have a positive value
@@ -183,10 +200,10 @@ public class W101Calculator {
                         allShields = (shieldsTotalValue(shieldValue));
                         shieldsList.remove(shieldsList.size() - 1);
                         lastShieldValueIndex = shieldValue.size() - 1;
-                        lastShieldListIndex = shieldsList.size() -1;
+                        lastShieldListIndex = shieldsList.size() - 1;
 
                         //finds the remaining value of the shield after pierce is all used up and changes the value within the arrays
-                    }else {
+                    } else {
                         piercedShield = pierce.abs();
                         shieldValue.set(lastShieldValueIndex, piercedShield);
                         shieldsList.set(lastShieldListIndex, addShields(piercedShield));
@@ -212,7 +229,7 @@ public class W101Calculator {
             resist = ogResist;
 
             //makes sure that the arrays are restored to the user imputed values
-            if (!originalShields.equals(shieldValue)){
+            if (!originalShields.equals(shieldValue)) {
                 shieldValue.clear();
                 shieldsList.clear();
                 for (int i = 0; i <= lastOGShieldIndex; i++) {
@@ -226,20 +243,20 @@ public class W101Calculator {
             System.out.println();
             System.out.println("'help' for list of commands");
             System.out.println();
-            System.out.println("Total: " + total + "\nCritical: " + calculateCriticalDamage(total,critMod));
+            System.out.println("Total: " + total + "\nCritical: " + calculateCriticalDamage(total, critMod));
             System.out.println();
             System.out.print("Enter a command: ");
             String command = scanner.nextLine();
 
             switch (command) {
                 case "b": {
-                    try{
+                    try {
                         System.out.print("Blade value: ");
                         BigDecimal buff = (calculator.getBuffValue(input.nextBigDecimal()));
                         bladeList.add(buff); //adds buff to blades list
                         blades = (calculateProduct(bladeList));
                         break;
-                    }catch (InputMismatchException e){
+                    } catch (InputMismatchException e) {
                         System.out.println("Invalid input. Please enter a valid number.");
                         input.next();
                         break;
@@ -333,10 +350,10 @@ public class W101Calculator {
                         originalShields.remove(originalShields.size() - 1);
                         if (!shieldsList.isEmpty()) {
                             allShields = shieldsTotalValue(shieldValue);
-                        }else {
+                        } else {
                             allShields = ZERO;
                         }
-                    }else {
+                    } else {
                         System.out.println("There are no shields to remove!");
                     }
                     break;
@@ -399,7 +416,7 @@ public class W101Calculator {
                     try {
                         System.out.print("Enter new spell damage: ");
                         spellDamage = (input.nextBigDecimal());
-                    }catch (InputMismatchException e) {
+                    } catch (InputMismatchException e) {
                         System.out.println("Invalid input! Please enter a valid decimal number.");
                     }
                     break;
@@ -408,7 +425,7 @@ public class W101Calculator {
                     try {
                         System.out.print("Enter new DMG: ");
                         characterDamage = (calculator.getDamageMultiplier(input.nextBigDecimal()));
-                    }catch (InputMismatchException e) {
+                    } catch (InputMismatchException e) {
                         System.out.println("Invalid input! Please enter a valid decimal number.");
                     }
                     break;
@@ -418,7 +435,7 @@ public class W101Calculator {
                         System.out.print("Enter new pierce: ");
                         ogPierce = (calculator.getPierceValue(input.nextBigDecimal()));
                         pierce = ogPierce;
-                    }catch (InputMismatchException e) {
+                    } catch (InputMismatchException e) {
                         System.out.println("Invalid input! Please enter a valid decimal number.");
                     }
                     break;
@@ -428,7 +445,7 @@ public class W101Calculator {
                         System.out.print("Enter new enemy resist: ");
                         ogResist = (calculator.getResistValue(input.nextBigDecimal()));
                         resist = ogResist;
-                    }catch (InputMismatchException e) {
+                    } catch (InputMismatchException e) {
                         System.out.println("Invalid input! Please enter a valid decimal number.");
                     }
                     break;
@@ -442,15 +459,62 @@ public class W101Calculator {
                     }
                     break;
 
+                case "check":
+                    System.out.println("Spell Damage: " + spellDamage);
+                    System.out.println("Player Damage: " + valueOf(100).multiply(characterDamage.subtract(ONE)).setScale(0,RoundingMode.FLOOR));
+                    System.out.println("Critical Multiplier: " + valueOf(100).multiply(critMod.subtract(ONE)).setScale(0,RoundingMode.FLOOR));
+                    System.out.println("Pierce: " + valueOf(100).multiply(ONE.subtract(pierce)).setScale(0,RoundingMode.FLOOR));
+                    System.out.println("Enemy Resist: " + valueOf(100).multiply(ONE.subtract(resist)).setScale(0,RoundingMode.FLOOR));
+
+                    if (aura.compareTo(ONE) == 0) {
+                        System.out.println("No Aura");
+                    } else {
+                        System.out.println("Aura: " + valueOf(100).multiply(aura.subtract(ONE)).setScale(0,RoundingMode.FLOOR));
+                    }
+
+                    if (bubble.compareTo(ONE) == 0) {
+                        System.out.println("No Bubble");
+                    } else {
+                        System.out.println("Bubble: " + valueOf(100).multiply(bubble.subtract(ONE)).setScale(0,RoundingMode.FLOOR));
+                    }
+
+                    if (!bladeList.isEmpty()) {
+                        System.out.println("Blades: " + displayBuffs(bladeList));
+                    }else {
+                        System.out.println("No Blades");
+                    }
+
+                    if (!trapList.isEmpty()){
+                        System.out.println("Traps: " + displayBuffs(trapList));
+                    }else {
+                        System.out.println("No Traps");
+                    }
+
+                    if (!weaknessList.isEmpty()){
+                        System.out.println("Weaknesses: " + displayWeaknesses(weaknessList));
+                    }else {
+                        System.out.println("No Weaknesses");
+                    }
+
+                    if (!originalShields.isEmpty()){
+                        System.out.println("Shields: " + displayWeaknesses(originalShields));
+                    }else {
+                        System.out.println("No Shields");
+                    }
+
+                    break;
+
                 case "q":
                     break label;
 
                 case "help":
-                    System.out.println("b\tadds a blade\nrb\tremoves the value of the last blade\n0b\tresets all blade\nt\tadds a trap\nrt\tremoves the value of the last trap\n0t\tresets all traps\nw\tadds a weakness\nrw\tre adds the value lost from the last weakness\n0w\tresets all weaknesses\ns\tadds a shield\nrs\tremoves the value of the last shield\n0s\tresets all shields\na\tadds an aura\n0a\tremoves an aura\nbub\tadds a bubble\n0bub\tremoves a bubble\n00\tresets ALL buffs and weaknesses\nns\tchanges the spells base dmg value\nnd\tchanges the dmg value\nnp\tchanges the pierce value\nnr\tchanges the resist value\nnc\tchanges the crit mod\nq\tstops the code");
+                    System.out.println("b\tadds a blade\nrb\tremoves the value of the last blade\n0b\tresets all blade\nt\tadds a trap\nrt\tremoves the value of the last trap\n0t\tresets all traps\nw\tadds a weakness\nrw\tre adds the value lost from the last weakness\n0w\tresets all weaknesses\ns\tadds a shield\nrs\tremoves the value of the last shield\n0s\tresets all shields\na\tadds an aura\n0a\tremoves an aura\nbub\tadds a bubble\n0bub\tremoves a bubble\n00\tresets ALL buffs and weaknesses\nns\tchanges the spells base dmg value\nnd\tchanges the dmg value\nnp\tchanges the pierce value\nnr\tchanges the resist value\nnc\tchanges the crit mod\ncheck\tdisplays all current buffs and debuffs\nq\tstops the code");
 
                 case default:
                     System.out.println("Invalid command");
                     break;
+
+
             }
         }
     }
