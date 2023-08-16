@@ -9,7 +9,7 @@ import static java.math.BigDecimal.*;
 
 public class W101Calculator {
 
-
+// This is a test
     // Convert a buff percentage to a decimal multiplier
     public BigDecimal convertBuff(BigDecimal num) {
         return ONE.add(num.multiply(valueOf(.01))); // updated to return 1 + num * 0.01
@@ -510,8 +510,7 @@ public class W101Calculator {
                 case "help":
                     System.out.println("b\tadds a blade\nrb\tremoves the value of the last blade\n0b\tresets all blade\nt\tadds a trap\nrt\tremoves the value of the last trap\n0t\tresets all traps\nw\tadds a weakness\nrw\tre adds the value lost from the last weakness\n0w\tresets all weaknesses\ns\tadds a shield\nrs\tremoves the value of the last shield\n0s\tresets all shields\na\tadds an aura\n0a\tremoves an aura\nbub\tadds a bubble\n0bub\tremoves a bubble\n00\tresets ALL buffs and weaknesses\nns\tchanges the spells base dmg value\nnd\tchanges the dmg value\nnp\tchanges the pierce value\nnr\tchanges the resist value\nnc\tchanges the crit mod\ncheck\tdisplays all current buffs and debuffs\nq\tstops the code");
 
-                case default:
-                    System.out.println("Invalid command");
+                default:
                     break;
 
 
