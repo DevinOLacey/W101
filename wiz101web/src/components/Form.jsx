@@ -42,6 +42,7 @@ export default function Form() {
                     InputProps={{startAdornment: <InputAdornment position="start" >{imgLabel(info.icon)}</InputAdornment>}}
                     size="small"
                     margin="dense"
+                    value=""
                     />
                 })}
         </React.Fragment>

@@ -34,8 +34,8 @@ export default function Modifiers() {
     //fields
     const buffFields = [
         {field:"blade", img:uniBladeIcon},
-        // {field:"aura", img:auraBuffIcon},
-        // {field:"bubble", img:bubbleIcon}
+        {field:"aura", img:auraBuffIcon},
+        {field:"bubble", img:bubbleIcon}
     ]
 
     const debuffFields = [

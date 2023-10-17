@@ -47,8 +47,8 @@ p{
   display: flex;
   flex-direction: column;
   padding:20px;
-  /* background:linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)) white !important; */
-  background-image:url("https://edgecast.wizard101.com/image/free/Wizard/C/Wizard-Society/Contests/Card_Myth.jpg?v=1");
+  background:linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)) white !important;
+  /* background-image:url("https://edgecast.wizard101.com/image/free/Wizard/C/Wizard-Society/Contests/Card_Myth.jpg?v=1"); */
   background-repeat: no-repeat;
   background-size: cover;
 }
