@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.13",
+    "@mui/material": "^5.14.5",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -18,9 +22,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server:java": "java -jar ../target/calculator-0.0.1-SNAPSHOT.jar",
-    "server:client":"npm start",
-    "server":"concurrently \"npm run server:client\" \"npm run server:java\""
-
+    "server:client": "npm start",
+    "server": "concurrently \"npm run server:client\" \"npm run server:java\""
   },
   "eslintConfig": {
     "extends": [

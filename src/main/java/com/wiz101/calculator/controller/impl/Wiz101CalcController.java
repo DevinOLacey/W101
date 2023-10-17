@@ -15,20 +15,18 @@ import java.util.List;
 public class Wiz101CalcController implements Wiz101Controller {
     @PostMapping("/fetchWizardStats")
     @Override
-    public ResponseEntity<WizStats> fetchWizardStats(@RequestBody int stats, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<WizStats> fetchWizardStats(@RequestBody WizStats stats, HttpServletRequest httpServletRequest) {
 
         System.out.println(stats);
 
-        WizStats wizStats = new WizStats();
-//
-        wizStats.setCrit(stats);
-        wizStats.setDamage(stats);
-        wizStats.setEnemyres(stats);
-        wizStats.setPeirce(stats);
-        wizStats.setSpelldmg(stats);
+        /*
+         Setting Wizard and Spell Base Stats
+        */
+        WizStats resObj = new WizStats();
+        resObj = stats;
 
 
-        return ResponseEntity.status(200).body(wizStats);
+        return ResponseEntity.status(200).body(stats);
     }
 
 }

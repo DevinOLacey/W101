@@ -16,5 +16,5 @@ public interface Wiz101Controller {
 
     @PostMapping("/")
     public ResponseEntity<WizStats> fetchWizardStats(
-            @RequestBody int stats, HttpServletRequest httpServletRequest);
+            @RequestBody WizStats stats , HttpServletRequest httpServletRequest);
 }

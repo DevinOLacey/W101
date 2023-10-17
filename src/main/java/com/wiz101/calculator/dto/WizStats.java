@@ -17,7 +17,7 @@ package com.wiz101.calculator.dto;
 ********/
 public class WizStats {
     private int spelldmg;
-    private int damage;
+    private int playerdmg;
     private int crit;
     private int peirce;
     private int enemyres;
@@ -26,11 +26,11 @@ public class WizStats {
     }
 
 //    BuffStorm
-    public WizStats(int spelldmg , int damage, int crit, int peirce, int enemyres){
+    public WizStats(int spelldmg , int playerdmg, int crit, int peirce, int enemyres){
       super();
 
       this.spelldmg = spelldmg;
-      this.damage = damage;
+      this.playerdmg = playerdmg;
       this.crit = crit;
       this.peirce = peirce;
       this.enemyres = enemyres;
@@ -71,11 +71,11 @@ public class WizStats {
         this.enemyres = enemyres;
     }
 
-    public int getDamage() {
-        return damage;
+    public int getPlayerdmg() {
+        return playerdmg;
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public void setPlayerdmg(int playerdmg) {
+        this.playerdmg = playerdmg;
     }
 }

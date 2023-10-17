@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import logo from './assets/cat-meme.gif';
+
 import './App.css';
+import 'animate.css';
+
+//
+import { Card } from '@mui/material';
+
+//Imported compenents
+import Form from './components/Form';
+import Modifiers from './components/Modifiers';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          #Nerf Storm
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App-header ">
+      <Card className="form animate__animated animate__bounceInDown" variant="outlined">
+        <Form />
+        <Modifiers />
+      </Card>
     </div>
   );
 }

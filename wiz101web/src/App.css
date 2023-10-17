@@ -13,8 +13,18 @@
   }
 }
 
+/* Font */
+p{
+  margin:0;
+  font-size: 18px;
+}
+
 .App-header {
-  background-color: #282c34;
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(./assets/wizard101-shadow-trickster-3.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-position: left;
+  /* background-color: #282c34; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,11 +38,31 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.imgLabel{
+  display: flex;
+  align-items: center;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  padding:20px;
+  /* background:linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)) white !important; */
+  background-image:url("https://edgecast.wizard101.com/image/free/Wizard/C/Wizard-Society/Contests/Card_Myth.jpg?v=1");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.grow{
+  transition: height .5s;
+  height: 0;
+  overflow: hidden;
+}
+
+.grow-up{
+  height: 60px;
+  transition: height .5s;
+}
+.itemList{
+  display: flex;
 }
