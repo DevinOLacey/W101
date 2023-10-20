@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/v1")
 @CrossOrigin(origins = "*")
 public class Wiz101CalcController implements Wiz101Controller {
-    @PostMapping("/fetchWizardStats")
+    @PostMapping("/calculate")
     @Override
     public ResponseEntity<WizStats> fetchWizardStats(@RequestBody WizStats stats, HttpServletRequest httpServletRequest) {
 

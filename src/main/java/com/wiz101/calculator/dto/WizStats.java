@@ -40,12 +40,9 @@ public class WizStats {
         return spelldmg;
     }
 
-
     public void setSpelldmg(int spelldmg) {
         this.spelldmg = spelldmg;
     }
-
-
 
     public int getCrit() {
         return crit;
